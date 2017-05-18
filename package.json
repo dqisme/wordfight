@@ -1,0 +1,19 @@
+{
+  "name": "wordfight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "dq",
+  "license": "ISC",
+  "dependencies": {
+    "next": "2.4.0",
+    "react": "15.5.4",
+    "react-dom": "15.5.4"
+  }
+}
