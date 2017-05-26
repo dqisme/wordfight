@@ -51,7 +51,9 @@ class Index extends React.Component {
       word: '',
       meaning: '',
       memorizedWord: '',
+      memorizedMeaning: '',
       wordError: '',
+      meaningError: '',
     };
   }
 
@@ -73,8 +75,8 @@ class Index extends React.Component {
       } else {
         memorizedWord = this.state.word;
         this.setState({
-          wordError: '',
           meaning: '',
+          wordError: '',
           memorizedWord,
         });
         this.meaningInput.focus();
@@ -84,8 +86,20 @@ class Index extends React.Component {
 
   handleMeaningInputKeyDown = (event) => {
     if (event.key === 'Enter') {
-      this.setState({ word: '' });
-      this.wordInput.focus();
+      let memorizedMeaning = '';
+      if (this.state.memorizedMeaning && this.state.meaning !== this.state.memorizedMeaning) {
+        this.setState({
+          meaningError: 'Wrong!',
+        });
+      } else {
+        memorizedMeaning = this.state.meaning;
+        this.setState({
+          word: '',
+          meaningError: '',
+          memorizedMeaning,
+        });
+        this.wordInput.focus();
+      }
     }
   };
 
@@ -114,6 +128,7 @@ class Index extends React.Component {
             }}
             style={styles.input}
             hintText="Meaning"
+            errorText={this.state.meaningError}
             onKeyDown={this.handleMeaningInputKeyDown}
           />
         </div>
