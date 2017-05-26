@@ -3,7 +3,7 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { TextField } from 'material-ui';
+import { Chip, TextField } from 'material-ui';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
@@ -14,15 +14,28 @@ if (!process.tapEventInjected) {
 
 const styles = {
   container: {
+    paddingTop: 200,
+  },
+  inputPanel: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    paddingTop: 200,
   },
   input: {
     textAlign: 'left',
     margin: 20,
+  },
+  memoryPanel: {
+    paddingLeft: 100,
+    paddingRight: 100,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  memory: {
+    marginRight: 10,
+    marginBottom: 10,
   },
 };
 
@@ -49,6 +62,7 @@ class Index extends React.Component {
     super(props, context);
     this.state = {
       ...this.initialWordAndMeaningState,
+      memorizedWordsAndMeanings: [],
     };
   }
 
@@ -80,6 +94,10 @@ class Index extends React.Component {
         this.state.meaningRepeatCount === this.state.meaningRepeatThreshold) {
       this.setState({
         ...this.initialWordAndMeaningState,
+        memorizedWordsAndMeanings: this.state.memorizedWordsAndMeanings.concat({
+          word: this.state.targetWord,
+          meaning: this.state.targetMeaning,
+        }),
       });
     }
   };
@@ -140,30 +158,44 @@ class Index extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
-          <TextField
-            value={this.state.word}
-            onChange={this.handleWordInputChange}
-            ref={(component) => {
-              this.wordInput = component;
-            }}
-            hintText="Word"
-            errorText={this.state.wordError}
-            style={styles.input}
-            underlineFocusStyle={this.getWordInputUnderlineStyle()}
-            onKeyDown={this.handleWordInputKeyDown}
-          />
-          <TextField
-            value={this.state.meaning}
-            onChange={this.handleMeaningInputChange}
-            ref={(component) => {
-              this.meaningInput = component;
-            }}
-            hintText="Meaning"
-            errorText={this.state.meaningError}
-            style={styles.input}
-            underlineFocusStyle={this.getWordInputUnderlineStyle()}
-            onKeyDown={this.handleMeaningInputKeyDown}
-          />
+          <div style={styles.inputPanel}>
+            <TextField
+              value={this.state.word}
+              onChange={this.handleWordInputChange}
+              ref={(component) => {
+                this.wordInput = component;
+              }}
+              hintText="Word"
+              errorText={this.state.wordError}
+              style={styles.input}
+              underlineFocusStyle={this.getWordInputUnderlineStyle()}
+              onKeyDown={this.handleWordInputKeyDown}
+            />
+            <TextField
+              value={this.state.meaning}
+              onChange={this.handleMeaningInputChange}
+              ref={(component) => {
+                this.meaningInput = component;
+              }}
+              hintText="Meaning"
+              errorText={this.state.meaningError}
+              style={styles.input}
+              underlineFocusStyle={this.getWordInputUnderlineStyle()}
+              onKeyDown={this.handleMeaningInputKeyDown}
+            />
+          </div>
+          <div style={styles.memoryPanel}>
+            {this.state.memorizedWordsAndMeanings.map(wordAndMeaning => (
+              <Chip
+                onRequestDelete={() => null}
+                onTouchTap={() => null}
+                style={styles.memory}
+                key={wordAndMeaning.word}
+              >
+                {wordAndMeaning.word}
+              </Chip>
+            ))}
+          </div>
         </div>
       </MuiThemeProvider>
     );
