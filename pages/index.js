@@ -55,8 +55,8 @@ class Index extends React.Component {
   initialWordAndMeaningState = {
     word: '',
     meaning: '',
-    memorizedWord: '',
-    memorizedMeaning: '',
+    targetWord: '',
+    targetMeaning: '',
     wordError: '',
     meaningError: '',
     wordRepeatCount: 0,
@@ -84,17 +84,17 @@ class Index extends React.Component {
 
   handleWordInputKeyDown = (event) => {
     if (event.key === 'Enter') {
-      let memorizedWord = '';
-      if (this.state.memorizedWord && this.state.word !== this.state.memorizedWord) {
+      let targetWord = '';
+      if (this.state.targetWord && this.state.word !== this.state.targetWord) {
         this.setState({
           wordError: 'Wrong!',
         });
       } else {
-        memorizedWord = this.state.word;
+        targetWord = this.state.word;
         this.setState({
           meaning: '',
           wordError: '',
-          memorizedWord,
+          targetWord,
           wordRepeatCount:
             Math.min(this.state.wordRepeatCount + 1, this.state.wordRepeatThreshold),
         }, this.checkDone);
@@ -105,17 +105,17 @@ class Index extends React.Component {
 
   handleMeaningInputKeyDown = (event) => {
     if (event.key === 'Enter') {
-      let memorizedMeaning = '';
-      if (this.state.memorizedMeaning && this.state.meaning !== this.state.memorizedMeaning) {
+      let targetMeaning = '';
+      if (this.state.targetMeaning && this.state.meaning !== this.state.targetMeaning) {
         this.setState({
           meaningError: 'Wrong!',
         });
       } else {
-        memorizedMeaning = this.state.meaning;
+        targetMeaning = this.state.meaning;
         this.setState({
           word: '',
           meaningError: '',
-          memorizedMeaning,
+          targetMeaning,
           meaningRepeatCount:
             Math.min(this.state.meaningRepeatCount + 1, this.state.meaningRepeatThreshold),
         }, this.checkDone);
