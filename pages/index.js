@@ -180,7 +180,7 @@ class Index extends React.Component {
               hintText="Meaning"
               errorText={this.state.meaningError}
               style={styles.input}
-              underlineFocusStyle={this.getWordInputUnderlineStyle()}
+              underlineFocusStyle={this.getMeaningInputUnderlineStyle()}
               onKeyDown={this.handleMeaningInputKeyDown}
             />
           </div>
