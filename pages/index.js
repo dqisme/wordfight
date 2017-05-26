@@ -52,6 +52,16 @@ class Index extends React.Component {
     };
   }
 
+  getWordInputUnderlineStyle = () => ({
+    width: `${((this.state.wordRepeatCount + 1) * 100) / this.state.wordRepeatThreshold}%`,
+    transformOrigin: 'center left',
+  });
+
+  getMeaningInputUnderlineStyle = () => ({
+    width: `${((this.state.meaningRepeatCount + 1) * 100) / this.state.meaningRepeatThreshold}%`,
+    transformOrigin: 'center left',
+  });
+
   initialWordAndMeaningState = {
     word: '',
     meaning: '',
@@ -139,6 +149,7 @@ class Index extends React.Component {
             hintText="Word"
             errorText={this.state.wordError}
             style={styles.input}
+            underlineFocusStyle={this.getWordInputUnderlineStyle()}
             onKeyDown={this.handleWordInputKeyDown}
           />
           <TextField
@@ -147,9 +158,10 @@ class Index extends React.Component {
             ref={(component) => {
               this.meaningInput = component;
             }}
-            style={styles.input}
             hintText="Meaning"
             errorText={this.state.meaningError}
+            style={styles.input}
+            underlineFocusStyle={this.getWordInputUnderlineStyle()}
             onKeyDown={this.handleMeaningInputKeyDown}
           />
         </div>
