@@ -3,7 +3,8 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Chip, TextField } from 'material-ui';
+import { Chip, Dialog, FlatButton, TextField } from 'material-ui';
+import * as _ from 'lodash';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
@@ -57,12 +58,12 @@ class Index extends React.Component {
 
     return { userAgent };
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
       ...this.initialWordAndMeaningState,
       memorizedWordsAndMeanings: [],
+      editingMemoryIndex: this.initialEditingMemoryIndex,
     };
   }
 
@@ -88,6 +89,16 @@ class Index extends React.Component {
     meaningRepeatCount: 0,
     meaningRepeatThreshold: 5,
   };
+
+  initialEditingMemoryIndex = -1;
+
+  handleCancelEditingMemory = () => {
+    this.setState({ editingMemoryIndex: this.initialEditingMemoryIndex });
+  };
+
+  handleDeleteEditingMemory;
+
+  handleUpdateEditingMemory;
 
   checkDone = () => {
     if (this.state.wordRepeatCount === this.state.wordRepeatThreshold &&
@@ -152,6 +163,19 @@ class Index extends React.Component {
     }
   };
 
+  actions = [
+    <FlatButton
+      label="Delete"
+      secondary
+      onTouchTap={this.handleDeleteEditingMemory}
+    />,
+    <FlatButton
+      label="Update"
+      primary
+      onTouchTap={this.handleUpdateEditingMemory}
+    />,
+  ];
+
   render() {
     const { userAgent } = this.props;
 
@@ -185,10 +209,11 @@ class Index extends React.Component {
             />
           </div>
           <div style={styles.memoryPanel}>
-            {this.state.memorizedWordsAndMeanings.map(wordAndMeaning => (
+            {this.state.memorizedWordsAndMeanings.map((wordAndMeaning, index) => (
               <Chip
-                onRequestDelete={() => null}
-                onTouchTap={() => null}
+                onTouchTap={() => {
+                  this.setState({ editingMemoryIndex: index });
+                }}
                 style={styles.memory}
                 key={wordAndMeaning.word}
               >
@@ -196,6 +221,20 @@ class Index extends React.Component {
               </Chip>
             ))}
           </div>
+          <Dialog
+            title="Edit word and its meaning"
+            actions={this.actions}
+            modal={false}
+            open={this.state.editingMemoryIndex !== this.initialEditingMemoryIndex}
+            onRequestClose={this.handleCancelEditingMemory}
+          >
+            <TextField
+              defaultValue={_.get(this.state.memorizedWordsAndMeanings, [this.state.editingMemoryIndex, 'word'])}
+            />
+            <TextField
+              defaultValue={_.get(this.state.memorizedWordsAndMeanings, [this.state.editingMemoryIndex, 'meaning'])}
+            />
+          </Dialog>
         </div>
       </MuiThemeProvider>
     );
