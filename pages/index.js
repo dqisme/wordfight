@@ -48,14 +48,31 @@ class Index extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      word: '',
-      meaning: '',
-      memorizedWord: '',
-      memorizedMeaning: '',
-      wordError: '',
-      meaningError: '',
+      ...this.initialWordAndMeaningState,
     };
   }
+
+  initialWordAndMeaningState = {
+    word: '',
+    meaning: '',
+    memorizedWord: '',
+    memorizedMeaning: '',
+    wordError: '',
+    meaningError: '',
+    wordRepeatCount: 0,
+    wordRepeatThreshold: 5,
+    meaningRepeatCount: 0,
+    meaningRepeatThreshold: 5,
+  };
+
+  checkDone = () => {
+    if (this.state.wordRepeatCount === this.state.wordRepeatThreshold &&
+        this.state.meaningRepeatCount === this.state.meaningRepeatThreshold) {
+      this.setState({
+        ...this.initialWordAndMeaningState,
+      });
+    }
+  };
 
   handleWordInputChange = (event) => {
     this.setState({ word: event.target.value });
@@ -78,7 +95,9 @@ class Index extends React.Component {
           meaning: '',
           wordError: '',
           memorizedWord,
-        });
+          wordRepeatCount:
+            Math.min(this.state.wordRepeatCount + 1, this.state.wordRepeatThreshold),
+        }, this.checkDone);
         this.meaningInput.focus();
       }
     }
@@ -97,7 +116,9 @@ class Index extends React.Component {
           word: '',
           meaningError: '',
           memorizedMeaning,
-        });
+          meaningRepeatCount:
+            Math.min(this.state.meaningRepeatCount + 1, this.state.meaningRepeatThreshold),
+        }, this.checkDone);
         this.wordInput.focus();
       }
     }
