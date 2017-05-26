@@ -14,10 +14,14 @@ if (!process.tapEventInjected) {
 
 const styles = {
   container: {
-    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     paddingTop: 200,
   },
   input: {
+    textAlign: 'left',
     margin: 20,
   },
 };
@@ -46,6 +50,8 @@ class Index extends React.Component {
     this.state = {
       word: '',
       meaning: '',
+      memorizedWord: '',
+      wordError: '',
     };
   }
 
@@ -59,8 +65,20 @@ class Index extends React.Component {
 
   handleWordInputKeyDown = (event) => {
     if (event.key === 'Enter') {
-      this.setState({ meaning: '' });
-      this.meaningInput.focus();
+      let memorizedWord = '';
+      if (this.state.memorizedWord && this.state.word !== this.state.memorizedWord) {
+        this.setState({
+          wordError: 'Wrong!',
+        });
+      } else {
+        memorizedWord = this.state.word;
+        this.setState({
+          wordError: '',
+          meaning: '',
+          memorizedWord,
+        });
+        this.meaningInput.focus();
+      }
     }
   };
 
@@ -84,6 +102,7 @@ class Index extends React.Component {
               this.wordInput = component;
             }}
             hintText="Word"
+            errorText={this.state.wordError}
             style={styles.input}
             onKeyDown={this.handleWordInputKeyDown}
           />
