@@ -1,102 +1,110 @@
-import React from 'react'
-import { deepOrange500 } from 'material-ui/styles/colors'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import { TextField } from 'material-ui'
+import React from 'react';
+import { deepOrange500 } from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { TextField } from 'material-ui';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
 if (!process.tapEventInjected) {
-    injectTapEventPlugin()
-    process.tapEventInjected = true
+  injectTapEventPlugin();
+  process.tapEventInjected = true;
 }
 
 const styles = {
-    container: {
-        textAlign: 'center',
-        paddingTop: 200
-    },
-    input: {
-        margin: 20
-    }
-}
+  container: {
+    textAlign: 'center',
+    paddingTop: 200,
+  },
+  input: {
+    margin: 20,
+  },
+};
 
 const muiTheme = {
-    palette: {
-        accent1Color: deepOrange500
-    }
-}
+  palette: {
+    accent1Color: deepOrange500,
+  },
+};
 
 class Index extends React.Component {
-    static getInitialProps ({ req }) {
-        // Ensures material-ui renders the correct css prefixes server-side
-        let userAgent
-        if (process.browser) {
-            userAgent = navigator.userAgent
-        } else {
-            userAgent = req.headers['user-agent']
-        }
-
-        return { userAgent }
+  static getInitialProps({ req }) {
+    // Ensures material-ui renders the correct css prefixes server-side
+    let userAgent;
+    if (process.browser) {
+      userAgent = global.navigator.userAgent;
+    } else {
+      userAgent = req.headers['user-agent'];
     }
 
-    constructor (props, context) {
-        super(props, context)
-        this.state = {
-            word: '',
-            meaning: ''
-        }
-    }
+    return { userAgent };
+  }
 
-    handleWordInputChange = (event) => {
-        this.setState({ word: event.target.value })
-    }
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      word: '',
+      meaning: '',
+    };
+  }
 
-    handleMeaningInputChange = (event) => {
-        this.setState({ meaning: event.target.value })
-    }
+  handleWordInputChange = (event) => {
+    this.setState({ word: event.target.value });
+  };
 
-    handleWordInputKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            this.setState({ meaning: '' })
-            this.meaningInput.focus()
-        }
-    }
+  handleMeaningInputChange = (event) => {
+    this.setState({ meaning: event.target.value });
+  };
 
-    handleMeaningInputKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            this.setState({ word: '' })
-            this.wordInput.focus()
-        }
+  handleWordInputKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({ meaning: '' });
+      this.meaningInput.focus();
     }
+  };
 
-    render () {
-        const { userAgent } = this.props
-
-        return (
-            <MuiThemeProvider muiTheme={getMuiTheme({userAgent, ...muiTheme})}>
-                <div style={styles.container}>
-                    <TextField
-                        value={this.state.word}
-                        onChange={this.handleWordInputChange}
-                        ref={(component) => { this.wordInput = component }}
-                        hintText="Word"
-                        style={styles.input}
-                        onKeyDown={this.handleWordInputKeyDown}
-                    />
-                    <TextField
-                        value={this.state.meaning}
-                        onChange={this.handleMeaningInputChange}
-                        ref={(component) => { this.meaningInput = component }}
-                        style={styles.input}
-                        hintText="Meaning"
-                        onKeyDown={this.handleMeaningInputKeyDown}
-                    />
-                </div>
-            </MuiThemeProvider>
-        )
+  handleMeaningInputKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({ word: '' });
+      this.wordInput.focus();
     }
+  };
+
+  render() {
+    const { userAgent } = this.props;
+
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
+        <div style={styles.container}>
+          <TextField
+            value={this.state.word}
+            onChange={this.handleWordInputChange}
+            ref={(component) => {
+              this.wordInput = component;
+            }}
+            hintText="Word"
+            style={styles.input}
+            onKeyDown={this.handleWordInputKeyDown}
+          />
+          <TextField
+            value={this.state.meaning}
+            onChange={this.handleMeaningInputChange}
+            ref={(component) => {
+              this.meaningInput = component;
+            }}
+            style={styles.input}
+            hintText="Meaning"
+            onKeyDown={this.handleMeaningInputKeyDown}
+          />
+        </div>
+      </MuiThemeProvider>
+    );
+  }
 }
 
-export default Index
+Index.propTypes = {
+  userAgent: React.PropTypes.string.isRequired,
+};
+
+export default Index;
