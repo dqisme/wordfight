@@ -46,6 +46,7 @@ class Index extends React.Component {
     this.state = {
       words: [],
       editingWordIndex: this.initialEditingWordIndex,
+      repeatThreshold: 5,
     };
   }
 
@@ -89,7 +90,10 @@ class Index extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
-          <InputPanel onSave={this.handleSave} />
+          <InputPanel
+            onSave={this.handleSave}
+            repeatThreshold={this.state.repeatThreshold}
+          />
           <WordPanel
             words={this.state.words}
             onWordPress={this.handleWordPress}

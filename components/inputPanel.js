@@ -49,6 +49,7 @@ class InputPanel extends React.Component {
         {this.fields.map((field, index) => (
           <Input
             key={field.name}
+            repeatThreshold={this.props.repeatThreshold}
             field={field.name}
             value={this.props.editingWord[field.name]}
             ref={(inputRef) => {
@@ -68,11 +69,13 @@ class InputPanel extends React.Component {
 
 InputPanel.propTypes = {
   onSave: PropTypes.func,
+  repeatThreshold: PropTypes.number,
   editingWord: PropTypes.shape(Word),
 };
 
 InputPanel.defaultProps = {
   onSave: _.noop,
+  repeatThreshold: 1,
   editingWord: new Word('', ''),
 };
 

@@ -26,7 +26,7 @@ class Input extends React.Component {
     savedValue: '',
     error: '',
     repeatCount: 0,
-    repeatThreshold: 5,
+    repeatThreshold: this.props.repeatThreshold,
   };
 
   handleChange = (event) => {
@@ -77,6 +77,7 @@ class Input extends React.Component {
 
 Input.propTypes = {
   field: PropTypes.string.isRequired,
+  repeatThreshold: PropTypes.number.isRequired,
   onCorrect: PropTypes.func,
   onRepeatDone: PropTypes.func,
   value: PropTypes.string,
