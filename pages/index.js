@@ -5,7 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Chip } from 'material-ui';
-import * as _ from 'lodash';
 
 import InputPanel from '../components/inputPanel';
 import EditingDialog from '../components/editingDialog';
