@@ -3,10 +3,10 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Chip, Dialog, FlatButton, TextField } from 'material-ui';
-import * as _ from 'lodash';
+import { Chip } from 'material-ui';
 
 import InputPanel from '../components/inputPanel';
+import EditingDialog from '../components/editingDialog';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
@@ -73,19 +73,6 @@ class Index extends React.Component {
 
   handleUpdateEditingMemory;
 
-  actions = [
-    <FlatButton
-      label="Delete"
-      secondary
-      onTouchTap={this.handleDeleteEditingMemory}
-    />,
-    <FlatButton
-      label="Update"
-      primary
-      onTouchTap={this.handleUpdateEditingMemory}
-    />,
-  ];
-
   render() {
     const { userAgent } = this.props;
 
@@ -106,20 +93,12 @@ class Index extends React.Component {
               </Chip>
             ))}
           </div>
-          <Dialog
-            title="Edit word and its meaning"
-            actions={this.actions}
-            modal={false}
-            open={this.state.editingWordIndex !== this.initialEditingWordIndex}
-            onRequestClose={this.handleCancelEditingMemory}
-          >
-            <TextField
-              defaultValue={_.get(this.state.words, [this.state.editingWordIndex, 'spelling'])}
-            />
-            <TextField
-              defaultValue={_.get(this.state.words, [this.state.editingWordIndex, 'meaning'])}
-            />
-          </Dialog>
+          <EditingDialog
+            isActive={this.state.editingWordIndex !== this.initialEditingWordIndex}
+            onClose={this.handleCancelEditingMemory}
+            onUpdate={this.handleUpdateEditingMemory}
+            onDelete={this.handleDeleteEditingMemory}
+          />
         </div>
       </MuiThemeProvider>
     );
