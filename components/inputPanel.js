@@ -17,11 +17,7 @@ const styles = {
 class InputPanel extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      spelling: '',
-      meaning: '',
-      spellingError: '',
-    };
+    this.state = {};
   }
 
   getWord = () =>
