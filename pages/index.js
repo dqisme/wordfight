@@ -57,18 +57,18 @@ class Index extends React.Component {
     });
   };
 
-  handleCancelEditingMemory = () => {
+  handleCancelEditingWord = () => {
     this.setState({ editingWordIndex: this.initialEditingWordIndex });
   };
 
-  handleDeleteEditingMemory = () => {
+  handleDeleteEditingWord = () => {
     this.setState({
       editingWordIndex: this.initialEditingWordIndex,
       words: this.state.words.filter((word, index) => index !== this.state.editingWordIndex),
     });
   };
 
-  handleUpdateEditingMemory = (updatedWord) => {
+  handleUpdateEditingWord = (updatedWord) => {
     if (updatedWord.spelling) {
       this.setState({
         editingWordIndex: this.initialEditingWordIndex,
@@ -76,7 +76,7 @@ class Index extends React.Component {
           (index === this.state.editingWordIndex ? updatedWord : word)),
       });
     } else {
-      this.handleDeleteEditingMemory();
+      this.handleDeleteEditingWord();
     }
   };
 
@@ -96,9 +96,9 @@ class Index extends React.Component {
           />
           <EditingDialog
             isActive={this.state.editingWordIndex !== this.initialEditingWordIndex}
-            onClose={this.handleCancelEditingMemory}
-            onUpdate={this.handleUpdateEditingMemory}
-            onDelete={this.handleDeleteEditingMemory}
+            onClose={this.handleCancelEditingWord}
+            onUpdate={this.handleUpdateEditingWord}
+            onDelete={this.handleDeleteEditingWord}
             word={this.state.words[this.state.editingWordIndex]}
           />
         </div>
