@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 
 import Input from './input';
@@ -65,8 +66,8 @@ class InputPanel extends React.Component {
 }
 
 InputPanel.propTypes = {
-  onSave: React.PropTypes.func,
-  editingWord: React.PropTypes.shape(Word),
+  onSave: PropTypes.func,
+  editingWord: PropTypes.shape(Word),
 };
 
 InputPanel.defaultProps = {

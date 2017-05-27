@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -50,6 +51,7 @@ class Index extends React.Component {
 
     return { userAgent };
   }
+
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -57,6 +59,7 @@ class Index extends React.Component {
       editingWordIndex: this.initialEditingWordIndex,
     };
   }
+
   initialEditingWordIndex = -1;
 
   handleSave = (savedWord) => {
@@ -107,7 +110,7 @@ class Index extends React.Component {
 }
 
 Index.propTypes = {
-  userAgent: React.PropTypes.string.isRequired,
+  userAgent: PropTypes.string.isRequired,
 };
 
 export default Index;

@@ -20,6 +20,7 @@
     "lodash": "4.17.4",
     "material-ui": "0.18.1",
     "next": "2.4.0",
+    "prop-types": "15.5.10",
     "react": "15.5.4",
     "react-dom": "15.5.4",
     "react-tap-event-plugin": "2.0.1"

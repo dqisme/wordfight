@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Dialog, FlatButton } from 'material-ui';
 import * as _ from 'lodash';
 
@@ -42,11 +43,11 @@ class EditingDialog extends React.Component {
 }
 
 EditingDialog.propTypes = {
-  isActive: React.PropTypes.bool.isRequired,
-  onClose: React.PropTypes.func,
-  onDelete: React.PropTypes.func,
-  onUpdate: React.PropTypes.func,
-  word: React.PropTypes.shape(Word),
+  isActive: PropTypes.bool.isRequired,
+  onClose: PropTypes.func,
+  onDelete: PropTypes.func,
+  onUpdate: PropTypes.func,
+  word: PropTypes.shape(Word),
 };
 
 EditingDialog.defaultProps = {

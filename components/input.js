@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TextField } from 'material-ui';
 import * as _ from 'lodash';
 
@@ -15,7 +16,7 @@ class Input extends React.Component {
     this.state = this.initialState;
   }
 
-  getUnderlineStyle = () => (this.props.value ? null : {
+  getUnderlineStyle = () => ({
     width: `${((this.state.repeatCount + 1) * 100) / this.state.repeatThreshold}%`,
     transformOrigin: 'center left',
   });
@@ -74,10 +75,10 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
-  field: React.PropTypes.string.isRequired,
-  onCorrect: React.PropTypes.func,
-  onRepeatDone: React.PropTypes.func,
-  value: React.PropTypes.string,
+  field: PropTypes.string.isRequired,
+  onCorrect: PropTypes.func,
+  onRepeatDone: PropTypes.func,
+  value: PropTypes.string,
 };
 
 Input.defaultProps = {
