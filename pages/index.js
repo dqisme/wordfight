@@ -6,6 +6,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Chip, Dialog, FlatButton, TextField } from 'material-ui';
 import * as _ from 'lodash';
 
+import InputPanel from '../components/inputPanel';
+
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
 if (!process.tapEventInjected) {
@@ -17,16 +19,6 @@ const styles = {
   container: {
     paddingTop: 200,
   },
-  inputPanel: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  input: {
-    textAlign: 'left',
-    margin: 20,
-  },
   memoryPanel: {
     paddingLeft: 100,
     paddingRight: 100,
@@ -34,7 +26,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  memory: {
+  wordCell: {
     marginRight: 10,
     marginBottom: 10,
   },
@@ -61,107 +53,25 @@ class Index extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      ...this.initialWordAndMeaningState,
-      memorizedWordsAndMeanings: [],
-      editingMemoryIndex: this.initialEditingMemoryIndex,
+      words: [],
+      editingWordIndex: this.initialEditingWordIndex,
     };
   }
+  initialEditingWordIndex = -1;
 
-  getWordInputUnderlineStyle = () => ({
-    width: `${((this.state.wordRepeatCount + 1) * 100) / this.state.wordRepeatThreshold}%`,
-    transformOrigin: 'center left',
-  });
-
-  getMeaningInputUnderlineStyle = () => ({
-    width: `${((this.state.meaningRepeatCount + 1) * 100) / this.state.meaningRepeatThreshold}%`,
-    transformOrigin: 'center left',
-  });
-
-  initialWordAndMeaningState = {
-    word: '',
-    meaning: '',
-    targetWord: '',
-    targetMeaning: '',
-    wordError: '',
-    meaningError: '',
-    wordRepeatCount: 0,
-    wordRepeatThreshold: 5,
-    meaningRepeatCount: 0,
-    meaningRepeatThreshold: 5,
+  handleSave = (savedWord) => {
+    this.setState({
+      words: this.state.words.concat(savedWord),
+    });
   };
 
-  initialEditingMemoryIndex = -1;
-
   handleCancelEditingMemory = () => {
-    this.setState({ editingMemoryIndex: this.initialEditingMemoryIndex });
+    this.setState({ editingWordIndex: this.initialEditingWordIndex });
   };
 
   handleDeleteEditingMemory;
 
   handleUpdateEditingMemory;
-
-  checkDone = () => {
-    if (this.state.wordRepeatCount === this.state.wordRepeatThreshold &&
-        this.state.meaningRepeatCount === this.state.meaningRepeatThreshold) {
-      this.setState({
-        ...this.initialWordAndMeaningState,
-        memorizedWordsAndMeanings: this.state.memorizedWordsAndMeanings.concat({
-          word: this.state.targetWord,
-          meaning: this.state.targetMeaning,
-        }),
-      });
-    }
-  };
-
-  handleWordInputChange = (event) => {
-    this.setState({ word: event.target.value });
-  };
-
-  handleMeaningInputChange = (event) => {
-    this.setState({ meaning: event.target.value });
-  };
-
-  handleWordInputKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      let targetWord = '';
-      if (this.state.targetWord && this.state.word !== this.state.targetWord) {
-        this.setState({
-          wordError: 'Wrong!',
-        });
-      } else {
-        targetWord = this.state.word;
-        this.setState({
-          meaning: '',
-          wordError: '',
-          targetWord,
-          wordRepeatCount:
-            Math.min(this.state.wordRepeatCount + 1, this.state.wordRepeatThreshold),
-        }, this.checkDone);
-        this.meaningInput.focus();
-      }
-    }
-  };
-
-  handleMeaningInputKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      let targetMeaning = '';
-      if (this.state.targetMeaning && this.state.meaning !== this.state.targetMeaning) {
-        this.setState({
-          meaningError: 'Wrong!',
-        });
-      } else {
-        targetMeaning = this.state.meaning;
-        this.setState({
-          word: '',
-          meaningError: '',
-          targetMeaning,
-          meaningRepeatCount:
-            Math.min(this.state.meaningRepeatCount + 1, this.state.meaningRepeatThreshold),
-        }, this.checkDone);
-        this.wordInput.focus();
-      }
-    }
-  };
 
   actions = [
     <FlatButton
@@ -182,42 +92,17 @@ class Index extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
-          <div style={styles.inputPanel}>
-            <TextField
-              value={this.state.word}
-              onChange={this.handleWordInputChange}
-              ref={(component) => {
-                this.wordInput = component;
-              }}
-              hintText="Word"
-              errorText={this.state.wordError}
-              style={styles.input}
-              underlineFocusStyle={this.getWordInputUnderlineStyle()}
-              onKeyDown={this.handleWordInputKeyDown}
-            />
-            <TextField
-              value={this.state.meaning}
-              onChange={this.handleMeaningInputChange}
-              ref={(component) => {
-                this.meaningInput = component;
-              }}
-              hintText="Meaning"
-              errorText={this.state.meaningError}
-              style={styles.input}
-              underlineFocusStyle={this.getMeaningInputUnderlineStyle()}
-              onKeyDown={this.handleMeaningInputKeyDown}
-            />
-          </div>
+          <InputPanel onSave={this.handleSave} />
           <div style={styles.memoryPanel}>
-            {this.state.memorizedWordsAndMeanings.map((wordAndMeaning, index) => (
+            {this.state.words.map((word, index) => (
               <Chip
                 onTouchTap={() => {
-                  this.setState({ editingMemoryIndex: index });
+                  this.setState({ editingWordIndex: index });
                 }}
-                style={styles.memory}
-                key={wordAndMeaning.word}
+                style={styles.wordCell}
+                key={word.spelling}
               >
-                {wordAndMeaning.word}
+                {word.spelling}
               </Chip>
             ))}
           </div>
@@ -225,14 +110,14 @@ class Index extends React.Component {
             title="Edit word and its meaning"
             actions={this.actions}
             modal={false}
-            open={this.state.editingMemoryIndex !== this.initialEditingMemoryIndex}
+            open={this.state.editingWordIndex !== this.initialEditingWordIndex}
             onRequestClose={this.handleCancelEditingMemory}
           >
             <TextField
-              defaultValue={_.get(this.state.memorizedWordsAndMeanings, [this.state.editingMemoryIndex, 'word'])}
+              defaultValue={_.get(this.state.words, [this.state.editingWordIndex, 'spelling'])}
             />
             <TextField
-              defaultValue={_.get(this.state.memorizedWordsAndMeanings, [this.state.editingMemoryIndex, 'meaning'])}
+              defaultValue={_.get(this.state.words, [this.state.editingWordIndex, 'meaning'])}
             />
           </Dialog>
         </div>
