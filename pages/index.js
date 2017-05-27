@@ -4,9 +4,9 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Chip } from 'material-ui';
 
 import InputPanel from '../components/inputPanel';
+import WordPanel from '../components/wordPanel';
 import EditingDialog from '../components/editingDialog';
 
 // Make sure react-tap-event-plugin only gets injected once
@@ -19,17 +19,6 @@ if (!process.tapEventInjected) {
 const styles = {
   container: {
     paddingTop: 200,
-  },
-  memoryPanel: {
-    paddingLeft: 100,
-    paddingRight: 100,
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  wordCell: {
-    marginRight: 10,
-    marginBottom: 10,
   },
 };
 
@@ -91,26 +80,20 @@ class Index extends React.Component {
     }
   };
 
+  handleWordPress = (wordIndex) => {
+    this.setState({ editingWordIndex: wordIndex });
+  };
+
   render() {
     const { userAgent } = this.props;
-
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
           <InputPanel onSave={this.handleSave} />
-          <div style={styles.memoryPanel}>
-            {this.state.words.map((word, index) => (
-              <Chip
-                onTouchTap={() => {
-                  this.setState({ editingWordIndex: index });
-                }}
-                style={styles.wordCell}
-                key={word.spelling}
-              >
-                {word.spelling}
-              </Chip>
-            ))}
-          </div>
+          <WordPanel
+            words={this.state.words}
+            onWordPress={this.handleWordPress}
+          />
           <EditingDialog
             isActive={this.state.editingWordIndex !== this.initialEditingWordIndex}
             onClose={this.handleCancelEditingMemory}
