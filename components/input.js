@@ -16,7 +16,7 @@ class Input extends React.Component {
     this.state = this.initialState;
   }
 
-  getUnderlineStyle = () => ({
+  getUnderlineStyle = () => (this.props.value ? null : {
     width: `${((this.state.repeatCount + 1) * 100) / this.state.repeatThreshold}%`,
     transformOrigin: 'center left',
   });
