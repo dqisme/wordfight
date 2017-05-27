@@ -8,6 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import InputPanel from '../components/inputPanel';
 import WordPanel from '../components/wordPanel';
 import EditingDialog from '../components/editingDialog';
+import Settings from '../components/settings';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
@@ -90,6 +91,7 @@ class Index extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
+          <Settings />
           <InputPanel
             onSave={this.handleSave}
             repeatThreshold={this.state.repeatThreshold}
