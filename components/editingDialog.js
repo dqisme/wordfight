@@ -3,6 +3,7 @@ import { Dialog, FlatButton } from 'material-ui';
 import * as _ from 'lodash';
 
 import InputPanel from './inputPanel';
+import Word from '../models/word';
 
 class EditingDialog extends React.Component {
   constructor(props, context) {
@@ -32,7 +33,9 @@ class EditingDialog extends React.Component {
         open={this.props.isActive}
         onRequestClose={this.props.onClose}
       >
-        <InputPanel />
+        <InputPanel
+          editingWord={this.props.word}
+        />
       </Dialog>
     );
   }
@@ -43,12 +46,14 @@ EditingDialog.propTypes = {
   onClose: React.PropTypes.func,
   onDelete: React.PropTypes.func,
   onUpdate: React.PropTypes.func,
+  word: React.PropTypes.shape(Word),
 };
 
 EditingDialog.defaultProps = {
   onClose: _.noop,
   onDelete: _.noop,
   onUpdate: _.noop,
+  word: new Word('', ''),
 };
 
 export default EditingDialog;

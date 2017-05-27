@@ -98,6 +98,7 @@ class Index extends React.Component {
             onClose={this.handleCancelEditingMemory}
             onUpdate={this.handleUpdateEditingMemory}
             onDelete={this.handleDeleteEditingMemory}
+            word={this.state.words[this.state.editingWordIndex]}
           />
         </div>
       </MuiThemeProvider>

@@ -2,6 +2,7 @@ import React from 'react';
 import * as _ from 'lodash';
 
 import Input from './input';
+import Word from '../models/word';
 
 const styles = {
   container: {
@@ -35,10 +36,10 @@ class InputPanel extends React.Component {
     }
   };
 
-  fields = [
-    { name: 'spelling', ref: null },
-    { name: 'meaning', ref: null },
-  ];
+  fields = Object.keys(new Word()).map(field => ({
+    name: field,
+    ref: null,
+  }));
 
   render() {
     return (
@@ -47,6 +48,7 @@ class InputPanel extends React.Component {
           <Input
             key={field.name}
             field={field.name}
+            value={this.props.editingWord[field.name]}
             ref={(inputRef) => {
               this.fields[index].ref = inputRef;
             }}
@@ -64,10 +66,12 @@ class InputPanel extends React.Component {
 
 InputPanel.propTypes = {
   onSave: React.PropTypes.func,
+  editingWord: React.PropTypes.shape(Word),
 };
 
 InputPanel.defaultProps = {
   onSave: _.noop,
+  editingWord: new Word('', ''),
 };
 
 export default InputPanel;

@@ -15,13 +15,13 @@ class Input extends React.Component {
     this.state = this.initialState;
   }
 
-  getUnderlineStyle = () => ({
+  getUnderlineStyle = () => (this.props.value ? null : {
     width: `${((this.state.repeatCount + 1) * 100) / this.state.repeatThreshold}%`,
     transformOrigin: 'center left',
   });
 
   initialState = {
-    value: '',
+    value: this.props.value,
     savedValue: '',
     error: '',
     repeatCount: 0,
@@ -67,7 +67,7 @@ class Input extends React.Component {
         errorText={this.state.error}
         style={styles.input}
         underlineFocusStyle={this.getUnderlineStyle()}
-        onKeyDown={this.handleKeyDown}
+        onKeyDown={this.props.value ? _.noop : this.handleKeyDown}
       />
     );
   }
@@ -77,11 +77,13 @@ Input.propTypes = {
   field: React.PropTypes.string.isRequired,
   onCorrect: React.PropTypes.func,
   onRepeatDone: React.PropTypes.func,
+  value: React.PropTypes.string,
 };
 
 Input.defaultProps = {
   onCorrect: _.noop,
   onRepeatDone: _.noop,
+  value: '',
 };
 
 export default Input;

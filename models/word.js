@@ -1,3 +1,6 @@
-/**
- * Created by dq on 27/05/2017.
- */
+export default class Word {
+  constructor(spelling, meaning) {
+    this.spelling = spelling;
+    this.meaning = meaning;
+  }
+}
