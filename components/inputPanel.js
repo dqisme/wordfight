@@ -24,15 +24,20 @@ class InputPanel extends React.Component {
     };
   }
 
+  getWord = () =>
+    this.fields
+      .map(field => ({
+        [field.name]: this.props.editingWord === InputPanel.defaultProps.editingWord ?
+          field.ref.state.savedValue : field.ref.state.value,
+      })).reduce(_.assign);
+
   getNextField = currentFieldIndex => this.fields[(currentFieldIndex + 1) % this.fields.length].ref;
 
   handleRepeatDone = () => {
     const isAllFieldsRepeatDone =
       this.fields.every(field => field.ref.state.repeatCount === field.ref.state.repeatThreshold);
     if (isAllFieldsRepeatDone) {
-      this.props.onSave(this.fields.map(field => ({
-        [field.name]: field.ref.state.savedValue,
-      })).reduce(_.assign));
+      this.props.onSave(this.getWord());
       this.fields.forEach(field => field.ref.setState({ ...field.ref.initialState }));
     }
   };

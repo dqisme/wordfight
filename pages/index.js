@@ -80,7 +80,13 @@ class Index extends React.Component {
     });
   };
 
-  handleUpdateEditingMemory;
+  handleUpdateEditingMemory = (updatedWord) => {
+    this.setState({
+      editingWordIndex: this.initialEditingWordIndex,
+      words: this.state.words.map((word, index) =>
+        (index === this.state.editingWordIndex ? updatedWord : word)),
+    });
+  };
 
   render() {
     const { userAgent } = this.props;

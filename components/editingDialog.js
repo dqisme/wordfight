@@ -21,7 +21,7 @@ class EditingDialog extends React.Component {
     <FlatButton
       label="Update"
       primary
-      onTouchTap={this.props.onUpdate}
+      onTouchTap={() => this.props.onUpdate(this.inputPanel.getWord())}
     />,
   ];
 
@@ -35,6 +35,9 @@ class EditingDialog extends React.Component {
         onRequestClose={this.props.onClose}
       >
         <InputPanel
+          ref={(component) => {
+            this.inputPanel = component;
+          }}
           editingWord={this.props.word}
         />
       </Dialog>
