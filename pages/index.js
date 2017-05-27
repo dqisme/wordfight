@@ -5,6 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Chip } from 'material-ui';
+import * as _ from 'lodash';
 
 import InputPanel from '../components/inputPanel';
 import EditingDialog from '../components/editingDialog';
@@ -72,7 +73,12 @@ class Index extends React.Component {
     this.setState({ editingWordIndex: this.initialEditingWordIndex });
   };
 
-  handleDeleteEditingMemory;
+  handleDeleteEditingMemory = () => {
+    this.setState({
+      editingWordIndex: this.initialEditingWordIndex,
+      words: this.state.words.filter((word, index) => index !== this.state.editingWordIndex),
+    });
+  };
 
   handleUpdateEditingMemory;
 
