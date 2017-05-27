@@ -34,7 +34,8 @@ class Input extends React.Component {
   };
 
   handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      event.preventDefault();
       if (this.state.savedValue && this.state.value !== this.state.savedValue) {
         this.setState({
           error: 'Wrong!',
