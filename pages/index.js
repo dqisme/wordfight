@@ -41,7 +41,6 @@ class Index extends React.Component {
 
     return { userAgent };
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -56,6 +55,12 @@ class Index extends React.Component {
   handleSave = (savedWord) => {
     this.setState({
       words: this.state.words.concat(savedWord),
+    });
+  };
+
+  handleSettingsSave = (settings) => {
+    this.setState({
+      repeatThreshold: settings.repeatThreshold,
     });
   };
 
@@ -91,7 +96,10 @@ class Index extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
-          <Settings />
+          <Settings
+            repeatThreshold={this.state.repeatThreshold}
+            onSave={this.handleSettingsSave}
+          />
           <InputPanel
             onSave={this.handleSave}
             repeatThreshold={this.state.repeatThreshold}

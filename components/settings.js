@@ -1,13 +1,40 @@
 import React from 'react';
-import { Dialog, FlatButton, IconButton } from 'material-ui';
+import PropTypes from 'prop-types';
 import { grey500 } from 'material-ui/styles/colors';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import {
+  Dialog,
+  FlatButton,
+  IconButton,
+  Slider,
+} from 'material-ui';
+import * as _ from 'lodash';
 
 const styles = {
   settingButton: {
     position: 'absolute',
     top: 0,
     right: 0,
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  itemText: {
+    marginTop: 23,
+    marginRight: 20,
+  },
+  slider: {
+    flex: 1,
+    marginRight: 20,
+  },
+  numberInput: {
+    width: 60,
+    marginTop: 7,
+  },
+  numberInputContent: {
+    textAlign: 'center',
   },
 };
 
@@ -16,12 +43,14 @@ class Settings extends React.Component {
     super(props, context);
     this.state = {
       isOpen: false,
+      repeatThreshold: props.repeatThreshold,
     };
   }
 
   handleOpen = () => {
     this.setState({
       isOpen: true,
+      repeatThreshold: this.props.repeatThreshold,
     });
   };
 
@@ -29,6 +58,19 @@ class Settings extends React.Component {
     this.setState({
       isOpen: false,
     });
+  };
+
+  handleRepeatThresholdChange = (event, value) => {
+    this.setState({
+      repeatThreshold: value,
+    });
+  };
+
+  handleSubmit = () => {
+    this.props.onSave({
+      repeatThreshold: this.state.repeatThreshold,
+    });
+    this.handleClose();
   };
 
   actions = [
@@ -40,7 +82,7 @@ class Settings extends React.Component {
     <FlatButton
       label="Submit"
       primary
-      onTouchTap={this.handleClose}
+      onTouchTap={this.handleSubmit}
     />,
   ];
 
@@ -51,16 +93,37 @@ class Settings extends React.Component {
           <SettingsIcon color={grey500} />
         </IconButton>
         <Dialog
-          title="Dialog With Actions"
+          title="Settings"
           actions={this.actions}
           modal={false}
           open={this.state.isOpen}
           onRequestClose={this.handleClose}
         >
-          The actions in this window were passed in as an array of React objects.
+          <div style={styles.item}>
+            <div style={styles.itemText}>Repeat Threshold</div>
+            <Slider
+              style={styles.slider}
+              step={1}
+              min={1}
+              max={10}
+              value={this.state.repeatThreshold}
+              onChange={this.handleRepeatThresholdChange}
+            />
+            <div style={styles.itemText}>{this.state.repeatThreshold}</div>
+          </div>
         </Dialog>
       </div>
     );
   }
 }
+
+Settings.propTypes = {
+  repeatThreshold: PropTypes.number.isRequired,
+  onSave: PropTypes.func,
+};
+
+Settings.defaultProps = {
+  onSave: _.noop,
+};
+
 export default Settings;
