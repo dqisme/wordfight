@@ -52,7 +52,7 @@ class Index extends React.Component {
 
   initialEditingWordIndex = -1;
 
-  handleSave = (savedWord) => {
+  handleRepeatSave = (savedWord) => {
     this.setState({
       words: this.state.words.concat(savedWord),
     });
@@ -101,8 +101,8 @@ class Index extends React.Component {
             onSave={this.handleSettingsSave}
           />
           <RepeatPanel
-            onSave={this.handleSave}
             repeatThreshold={this.state.repeatThreshold}
+            onSave={this.handleRepeatSave}
           />
           <WordPanel
             words={this.state.words}
