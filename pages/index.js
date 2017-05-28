@@ -5,7 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import InputPanel from '../components/inputPanel';
+import RepeatPanel from '../components/repeatPanel';
 import WordPanel from '../components/wordPanel';
 import EditingDialog from '../components/editingDialog';
 import Settings from '../components/settings';
@@ -100,7 +100,7 @@ class Index extends React.Component {
             repeatThreshold={this.state.repeatThreshold}
             onSave={this.handleSettingsSave}
           />
-          <InputPanel
+          <RepeatPanel
             onSave={this.handleSave}
             repeatThreshold={this.state.repeatThreshold}
           />
