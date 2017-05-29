@@ -8,8 +8,9 @@ import Word from '../models/word';
 
 const styles = {
   container: {
-    paddingLeft: 100,
-    paddingRight: 100,
+    paddingTop: 10,
+    paddingLeft: '10%',
+    paddingRight: '10%',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',

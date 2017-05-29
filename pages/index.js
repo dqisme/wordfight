@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -19,7 +20,7 @@ if (!process.tapEventInjected) {
 
 const styles = {
   container: {
-    paddingTop: 200,
+    paddingTop: 100,
   },
 };
 
@@ -96,6 +97,11 @@ class Index extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({ userAgent, ...muiTheme })}>
         <div style={styles.container}>
+          <Head>
+            <title>Word Fight!</title>
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+          </Head>
           <Settings
             repeatThreshold={this.state.repeatThreshold}
             onSave={this.handleSettingsSave}
