@@ -63,6 +63,7 @@ class EditingDialog extends React.Component {
         <div style={styles.container}>
           {_.keys(this.state.word).map(field => (
             <TextField
+              key={field}
               style={styles.input}
               value={this.state.word[field]}
               onChange={({ target: { value } }) => this.handleInputChange(field, value)}
