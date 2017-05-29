@@ -1,16 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, FlatButton } from 'material-ui';
+import { Dialog, FlatButton, TextField } from 'material-ui';
 import * as _ from 'lodash';
 
-import InputPanel from './inputPanel';
 import Word from '../models/word';
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  input: {
+    textAlign: 'left',
+    margin: 20,
+  },
+};
 
 class EditingDialog extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {};
+    this.state = {
+      word: props.word,
+    };
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      word: nextProps.word,
+    });
+  }
+
+  handleInputChange = (field, value) => {
+    this.setState({
+      word: _.assign(_.clone(this.state.word), {
+        [field]: value,
+      }),
+    });
+  };
 
   actions = [
     <FlatButton
@@ -21,7 +49,7 @@ class EditingDialog extends React.Component {
     <FlatButton
       label="Update"
       primary
-      onTouchTap={() => this.props.onUpdate(this.inputPanel.getWord())}
+      onTouchTap={() => this.props.onUpdate(this.state.word)}
     />,
   ];
 
@@ -34,12 +62,15 @@ class EditingDialog extends React.Component {
         open={this.props.isActive}
         onRequestClose={this.props.onClose}
       >
-        <InputPanel
-          ref={(component) => {
-            this.inputPanel = component;
-          }}
-          editingWord={this.props.word}
-        />
+        <div style={styles.container}>
+          {_.keys(this.state.word).map(field => (
+            <TextField
+              style={styles.input}
+              value={this.state.word[field]}
+              onChange={({ target: { value } }) => this.handleInputChange(field, value)}
+            />
+          ))}
+        </div>
       </Dialog>
     );
   }
