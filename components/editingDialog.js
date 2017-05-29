@@ -59,7 +59,7 @@ class EditingDialog extends React.Component {
         title="Edit word"
         actions={this.actions}
         modal={false}
-        open={this.props.isActive}
+        open={this.props.isOpen}
         onRequestClose={this.props.onClose}
       >
         <div style={styles.container}>
@@ -77,7 +77,7 @@ class EditingDialog extends React.Component {
 }
 
 EditingDialog.propTypes = {
-  isActive: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func,
   onDelete: PropTypes.func,
   onUpdate: PropTypes.func,

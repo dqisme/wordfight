@@ -109,7 +109,7 @@ class Index extends React.Component {
             onWordPress={this.handleWordPress}
           />
           <EditingDialog
-            isActive={this.state.editingWordIndex !== this.initialEditingWordIndex}
+            isOpen={this.state.editingWordIndex !== this.initialEditingWordIndex}
             onClose={this.handleCancelEditingWord}
             onUpdate={this.handleUpdateEditingWord}
             onDelete={this.handleDeleteEditingWord}
