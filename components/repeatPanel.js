@@ -69,9 +69,9 @@ class RepeatPanel extends React.Component {
         if ((isFirstTime && !isCorrect) || (!isFirstTime && isCorrect)) {
           updatedRepeatCount = this.state.repeatCount + 1;
           if (updatedRepeatCount >= this.props.repeatThreshold) {
+            this.props.onSave(updatedWord);
             updatedRepeatCount = 0;
             updatedWord = this.initialWord;
-            this.props.onSave(this.state.word);
           }
         }
       }
