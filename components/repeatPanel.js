@@ -63,9 +63,7 @@ class RepeatPanel extends React.Component {
       let updatedWord = this.state.word;
       let updatedRepeatCount = this.state.repeatCount;
       if (isFirstTime && !isCorrect) {
-        updatedWord = _.assign(_.clone(this.state.word), {
-          [this.currentField]: this.state.inputValue,
-        });
+        updatedWord = _.clone(this.state.word).set(this.currentField, this.state.inputValue);
       }
       if (isLastField) {
         if ((isFirstTime && !isCorrect) || (!isFirstTime && isCorrect)) {

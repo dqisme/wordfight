@@ -3,4 +3,9 @@ export default class Word {
     this.spelling = spelling;
     this.meaning = meaning;
   }
+
+  set(field, value) {
+    this[field] = value;
+    return this;
+  }
 }

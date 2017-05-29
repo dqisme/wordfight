@@ -34,9 +34,7 @@ class EditingDialog extends React.Component {
 
   handleInputChange = (field, value) => {
     this.setState({
-      word: _.assign(_.clone(this.state.word), {
-        [field]: value,
-      }),
+      word: _.clone(this.state.word).set(field, value),
     });
   };
 
