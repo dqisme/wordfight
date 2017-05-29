@@ -5,10 +5,10 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import Settings from '../components/settings';
 import RepeatPanel from '../components/repeatPanel';
 import WordPanel from '../components/wordPanel';
 import EditingDialog from '../components/editingDialog';
-import Settings from '../components/settings';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
