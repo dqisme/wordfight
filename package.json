@@ -17,6 +17,7 @@
   "author": "dq",
   "license": "ISC",
   "dependencies": {
+    "axios": "0.16.1",
     "express": "4.15.3",
     "lodash": "4.17.4",
     "material-ui": "0.18.1",
