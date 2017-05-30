@@ -63,11 +63,14 @@ class RepeatPanel extends React.Component {
       const isFirstTime = _.isEmpty(this.state.word[this.currentField]);
       const isCorrect = this.state.inputValue === this.state.word[this.currentField];
       const isLastField = this.state.currentFieldIndex === this.wordFields.length - 1;
+      const isFirstTimeInputSuccess = isFirstTime && !isCorrect;
+      const isInputSuccess = (isFirstTimeInputSuccess) || (!isFirstTime && isCorrect);
+
       let updatedWord = this.state.word;
       let updatedRepeatCount = this.state.repeatCount;
       let isInputDisabled = this.state.isInputDisabled;
       let inputLabel = this.state.inputLabel;
-      if (isFirstTime && !isCorrect) {
+      if (isFirstTimeInputSuccess) {
         updatedWord = _.clone(this.state.word).set(this.currentField, this.state.inputValue);
         if (this.props.shouldAutoTranslate && updatedWord.canTranslate) {
           isInputDisabled = true;
@@ -84,8 +87,11 @@ class RepeatPanel extends React.Component {
           });
         }
       }
-      if (isLastField) {
-        if ((isFirstTime && !isCorrect) || (!isFirstTime && isCorrect)) {
+      if (isInputSuccess) {
+        if (this.props.shouldPronounce) {
+          updatedWord.pronounce(this.currentField);
+        }
+        if (isLastField) {
           updatedRepeatCount = this.state.repeatCount + 1;
           if (updatedRepeatCount >= this.props.repeatThreshold) {
             this.props.onSave(updatedWord);
@@ -135,11 +141,13 @@ RepeatPanel.propTypes = {
   repeatThreshold: PropTypes.number.isRequired,
   onSave: PropTypes.func,
   shouldAutoTranslate: PropTypes.bool,
+  shouldPronounce: PropTypes.bool,
 };
 
 RepeatPanel.defaultProps = {
   onSave: _.noop,
   shouldAutoTranslate: false,
+  shouldPronounce: false,
 };
 
 export default RepeatPanel;

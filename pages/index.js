@@ -50,6 +50,7 @@ class Index extends React.Component {
       editingWordIndex: this.initialEditingWordIndex,
       repeatThreshold: 5,
       shouldAutoTranslate: true,
+      shouldPronounce: true,
     };
   }
 
@@ -114,6 +115,7 @@ class Index extends React.Component {
             repeatThreshold={this.state.repeatThreshold}
             onSave={this.handleRepeatSave}
             shouldAutoTranslate={this.state.shouldAutoTranslate}
+            shouldPronounce={this.state.shouldPronounce}
           />
           <WordPanel
             words={this.state.words}

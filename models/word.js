@@ -24,4 +24,19 @@ export default class Word {
   get canTranslate() {
     return _.isEmpty(this.meaning) && !_.isEmpty(this.spelling);
   }
+
+  static languages = {
+    spelling: 'en-US',
+    meaning: 'zh-CN',
+  };
+
+  pronounce(field) {
+    const speechSynthesis = global.speechSynthesis;
+    const SpeechSynthesisUtterance = global.SpeechSynthesisUtterance;
+    if (this[field] && speechSynthesis && SpeechSynthesisUtterance) {
+      const utterance = new SpeechSynthesisUtterance(this[field]);
+      utterance.lang = Word.languages[field];
+      speechSynthesis.speak(utterance);
+    }
+  }
 }
