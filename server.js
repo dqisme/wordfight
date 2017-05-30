@@ -9,13 +9,7 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    server.get('/translate', (req, res) => {
-      return res.send(JSON.stringify({ foo: 'bar' }));
-    });
-
-    server.get('/b', (req, res) => {
-      return app.render(req, res, '/a', req.query)
-    });
+    server.use('/api', require('./apis'));
 
     server.get('*', (req, res) => {
       return handle(req, res)
