@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "zippy-acronym-169116",
+  "private_key_id": "fe6d22c30bdfaf1188529b8205e00bbe8502d612",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC2o1V542W4Vp9j\nenQFwk1ORoiBR4i5R3I2IAiHVLD9p+NAeu5p2FxbBgUjvTOstKB1S0Lys8E4ZoOL\nPeQwuAudFfYb3VaOeNBxUFf+0U0b9J+cKPyI0c2zE1O2OvxlGfGdCg0F9HJ5qODm\nykYLE0eexdqXElBjzH9nvW/fHmzyjs3W06dq79m0/Bm0edhfkEM+OXaEJY+CTuU4\nWUQ2pH/nQ0BsLV4KcLyGVfG3+n5D/BKG4UdZkdMFULj1KO10ZFm+AwjTcUyqSK7G\nA9khBidZog+dPGh3DzCVDMWbJ3JsNbyj3C0I+gbWcNQVoe29DpyFV5AxR/dxHX2P\nI3v9376zAgMBAAECggEAGd+82cY94GYhMYIlErXKpua2Kv5736fABev22VlFs8HH\nn5hq00LsHpcVPlFtEzAJtWRCqUiO/JMFWsIbZE2Gk6wLUDpEq21xNkRoGvkC4A2B\nWSmzURzL8+0uhFgJ7rbEtHc6jhfp6dNjfT61upbyJAuqopFdIy5S9FrxkN3qGFil\n6cy07jtW1FHmoptfBFVCFzXIPcLB9S1/SHb4Ml3GknFKPfOHYUcvfIbq0aMeHFM1\nauTSFn7bkQHLaXwTMbT3tveyhi28NHmVPS54aQqTfy6+RoushrpAq6EFvHANm8wu\nLIHbNPs2pWDVHB7nB6sTUARMdWoRqM2UByHu6nRN5QKBgQD5kyZEq7WbaLtFaPDO\nhj2x5WtbZn9CM3l4f+Uy+I7+zE48vd836AmdomsjG3LCA7BUAx3dHRzbDub/kLqf\ngigYRuG2nTJj/UXd0msa0qjE+et4DHvuiOkLIXTQtF05VV9bvmZM19/UotqoCrbR\nO9iRJCJTY+uI+PIz09BgTFaLHQKBgQC7Vwe1PyFmBqOmzLbANcRENnd1qfCzhbDr\nWY30K+aFm4FleZ6xoXTmWKnLaVfOkyvH1Ny9u1W2jLrqJazq3oe2APSVnfs8DN+y\nQXTh43cb0lc4APmFwwDs/9ntqi1G8txVw/jv9EPa6st/jFvWt0dOOj6V20jaT2/9\niswqVnh4DwKBgQDIHkvDKIQ4lyQCpgDhORbjPHh3E5rbNHckPjlEQ7Y1bREW95Cz\nPWXodkG+JtY/58FNvCoIEL4AkNR8/EoIeM85mCyIx0eOkZmiIoUrPtuBBnzfB/Of\n8zwaZrtKVjWiMWiDIgrZdwfNcsAtmlm5MGmZCAZWI3rLnAJpuGAPt2Z1qQKBgQCE\ngTAQgFCNK1EBH3Z7SQxC+wtPjB2VvI/ARx1igNKR2cWSEo2uMfbPHhMqrp3OnMWw\nl9xxzlj3v15NUsyVa0Qt9UsJsC4M8UYffLDBPPP4F7RdBkN22tCC0QxBT8aqkghK\nGUyv2+NKqhu5YXtryUKEECpIMEu9LcaWXF+/6l1W/QKBgQDoh+JAaLvZ35wy2ZZT\n73imb7CQx1O5aGZUAGj+nDu3GaEqKCjvaFvtdj/ZUc7tOQa8ivDI+A2iq+LoVC+z\npCCWg7Iq8qIqPc83U0FM3GDNxBWQIs7CJ/3OP4qp9J3ZnjiV2of7g4WxSKsriQzx\nbUMOl4z6QJuydQ1p/sV3YvWF/A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "wordfight-heroku@zippy-acronym-169116.iam.gserviceaccount.com",
+  "client_id": "108792443729208635729",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wordfight-heroku%40zippy-acronym-169116.iam.gserviceaccount.com"
+}
