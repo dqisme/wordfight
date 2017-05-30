@@ -1,8 +1,9 @@
 {
   "name": "wordfight",
   "version": "1.0.0",
-  "description": "",
+  "description": "A playground for practicing repeatly spelling and meaning of words",
   "main": "index.js",
+  "repository": "https://github.com/dqisme/wordfight.git",
   "engines": {
     "node": "6.10.3",
     "npm": "3.10.10"
