@@ -24,6 +24,7 @@ class RepeatPanel extends React.Component {
       currentFieldIndex: 0,
       inputValue: '',
       inputError: '',
+      isInputDisabled: false,
     };
   }
 
@@ -45,7 +46,8 @@ class RepeatPanel extends React.Component {
 
   get inputUnderlineStyle() {
     return {
-      width: `${Math.min(((this.state.repeatCount + 1) * 100) / this.props.repeatThreshold, 100)}%`,
+      width: this.state.isInputDisabled ?
+        0 : `${Math.min(((this.state.repeatCount + 1) * 100) / this.props.repeatThreshold, 100)}%`,
       transformOrigin: 'center left',
     };
   }
@@ -62,8 +64,21 @@ class RepeatPanel extends React.Component {
       const isLastField = this.state.currentFieldIndex === this.wordFields.length - 1;
       let updatedWord = this.state.word;
       let updatedRepeatCount = this.state.repeatCount;
+      let isInputDisabled = this.state.isInputDisabled;
       if (isFirstTime && !isCorrect) {
         updatedWord = _.clone(this.state.word).set(this.currentField, this.state.inputValue);
+        if (this.props.shouldAutoTranslate && updatedWord.canTranslate) {
+          isInputDisabled = true;
+          updatedWord.translate((translation) => {
+            this.input.blur();
+            this.setState({
+              isInputDisabled: false,
+              inputValue: translation,
+            }, () => {
+              this.input.focus();
+            });
+          });
+        }
       }
       if (isLastField) {
         if ((isFirstTime && !isCorrect) || (!isFirstTime && isCorrect)) {
@@ -84,6 +99,7 @@ class RepeatPanel extends React.Component {
           (isCorrect || isFirstTime) ? '' : this.state.inputValue,
         inputError:
           (isCorrect || isFirstTime) ? '' : 'Wrong!',
+        isInputDisabled,
       });
     }
   };
@@ -93,12 +109,16 @@ class RepeatPanel extends React.Component {
       <div style={styles.container}>
         <h1>{this.state.word[this.wordFields[this.previousFieldIndex]]}</h1>
         <TextField
+          ref={(component) => {
+            this.input = component;
+          }}
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           hintText={_.startCase(this.currentField)}
           onKeyDown={this.handleInputKeyDown}
           errorText={this.state.inputError}
           underlineFocusStyle={this.inputUnderlineStyle}
+          disabled={this.state.isInputDisabled}
         />
       </div>
     );
@@ -108,10 +128,12 @@ class RepeatPanel extends React.Component {
 RepeatPanel.propTypes = {
   repeatThreshold: PropTypes.number.isRequired,
   onSave: PropTypes.func,
+  shouldAutoTranslate: PropTypes.bool,
 };
 
 RepeatPanel.defaultProps = {
   onSave: _.noop,
+  shouldAutoTranslate: false,
 };
 
 export default RepeatPanel;

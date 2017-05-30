@@ -42,12 +42,14 @@ class Index extends React.Component {
 
     return { userAgent };
   }
+
   constructor(props, context) {
     super(props, context);
     this.state = {
       words: [],
       editingWordIndex: this.initialEditingWordIndex,
       repeatThreshold: 5,
+      shouldAutoTranslate: true,
     };
   }
 
@@ -100,7 +102,10 @@ class Index extends React.Component {
           <Head>
             <title>Word Fight!</title>
             <meta charSet="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            />
           </Head>
           <Settings
             repeatThreshold={this.state.repeatThreshold}
@@ -109,6 +114,7 @@ class Index extends React.Component {
           <RepeatPanel
             repeatThreshold={this.state.repeatThreshold}
             onSave={this.handleRepeatSave}
+            shouldAutoTranslate={this.state.shouldAutoTranslate}
           />
           <WordPanel
             words={this.state.words}
