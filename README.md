@@ -1,6 +1,6 @@
 # WordFight
 
-> A playground for practicing repeatedly spelling and meaning of words
+> A playground for practicing the spelling and meaning of words repeatedly
 
 
 [![Build Status](https://travis-ci.org/dqisme/wordfight.svg?branch=master)](https://travis-ci.org/dqisme/wordfight)
