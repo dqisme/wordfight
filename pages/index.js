@@ -109,6 +109,7 @@ class Index extends React.Component {
           <Settings
             repeatThreshold={this.state.repeatThreshold}
             shouldAutoTranslate={this.state.shouldAutoTranslate}
+            shouldPronounce={this.state.shouldPronounce}
             onSave={this.handleSettingsSave}
           />
           <RepeatPanel

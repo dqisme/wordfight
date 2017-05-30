@@ -50,6 +50,7 @@ class Settings extends React.Component {
       isOpen: false,
       repeatThreshold: props.repeatThreshold,
       shouldAutoTranslate: props.shouldAutoTranslate,
+      shouldPronounce: props.shouldPronounce,
     };
   }
 
@@ -58,6 +59,7 @@ class Settings extends React.Component {
       isOpen: true,
       repeatThreshold: this.props.repeatThreshold,
       shouldAutoTranslate: this.props.shouldAutoTranslate,
+      shouldPronounce: this.props.shouldPronounce,
     });
   };
 
@@ -79,10 +81,17 @@ class Settings extends React.Component {
     });
   };
 
+  handleShouldPronounceToggle = (event, value) => {
+    this.setState({
+      shouldPronounce: value,
+    });
+  };
+
   handleSubmit = () => {
     this.props.onSave({
       repeatThreshold: this.state.repeatThreshold,
       shouldAutoTranslate: this.state.shouldAutoTranslate,
+      shouldPronounce: this.state.shouldPronounce,
     });
     this.handleClose();
   };
@@ -133,6 +142,14 @@ class Settings extends React.Component {
               onToggle={this.handleShouldAutoTranslateToggle}
             />
           </div>
+          <div style={styles.item}>
+            <div style={styles.itemText}>Pronunciation</div>
+            <Toggle
+              style={styles.toggle}
+              toggled={this.state.shouldPronounce}
+              onToggle={this.handleShouldPronounceToggle}
+            />
+          </div>
         </Dialog>
       </div>
     );
@@ -142,6 +159,7 @@ class Settings extends React.Component {
 Settings.propTypes = {
   repeatThreshold: PropTypes.number.isRequired,
   shouldAutoTranslate: PropTypes.bool.isRequired,
+  shouldPronounce: PropTypes.bool.isRequired,
   onSave: PropTypes.func,
 };
 
