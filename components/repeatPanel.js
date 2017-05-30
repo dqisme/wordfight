@@ -24,6 +24,7 @@ class RepeatPanel extends React.Component {
       currentFieldIndex: 0,
       inputValue: '',
       inputError: '',
+      inputLabel: '',
       isInputDisabled: false,
     };
   }
@@ -65,15 +66,18 @@ class RepeatPanel extends React.Component {
       let updatedWord = this.state.word;
       let updatedRepeatCount = this.state.repeatCount;
       let isInputDisabled = this.state.isInputDisabled;
+      let inputLabel = this.state.inputLabel;
       if (isFirstTime && !isCorrect) {
         updatedWord = _.clone(this.state.word).set(this.currentField, this.state.inputValue);
         if (this.props.shouldAutoTranslate && updatedWord.canTranslate) {
           isInputDisabled = true;
+          inputLabel = 'Wait for translating...';
           updatedWord.translate((translation) => {
             this.input.blur();
             this.setState({
               isInputDisabled: false,
               inputValue: translation,
+              inputLabel: '',
             }, () => {
               this.input.focus();
             });
@@ -100,6 +104,7 @@ class RepeatPanel extends React.Component {
         inputError:
           (isCorrect || isFirstTime) ? '' : 'Wrong!',
         isInputDisabled,
+        inputLabel,
       });
     }
   };
@@ -119,6 +124,7 @@ class RepeatPanel extends React.Component {
           errorText={this.state.inputError}
           underlineFocusStyle={this.inputUnderlineStyle}
           disabled={this.state.isInputDisabled}
+          floatingLabelText={this.state.inputLabel}
         />
       </div>
     );
