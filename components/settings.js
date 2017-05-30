@@ -7,6 +7,7 @@ import {
   FlatButton,
   IconButton,
   Slider,
+  Toggle,
 } from 'material-ui';
 import * as _ from 'lodash';
 
@@ -24,10 +25,14 @@ const styles = {
   itemText: {
     marginTop: 23,
     marginRight: 20,
+    flexShrink: 0,
   },
   slider: {
     flex: 1,
     marginRight: 20,
+  },
+  toggle: {
+    marginTop: 20,
   },
   numberInput: {
     width: 60,
@@ -44,6 +49,7 @@ class Settings extends React.Component {
     this.state = {
       isOpen: false,
       repeatThreshold: props.repeatThreshold,
+      shouldAutoTranslate: props.shouldAutoTranslate,
     };
   }
 
@@ -51,6 +57,7 @@ class Settings extends React.Component {
     this.setState({
       isOpen: true,
       repeatThreshold: this.props.repeatThreshold,
+      shouldAutoTranslate: this.props.shouldAutoTranslate,
     });
   };
 
@@ -66,9 +73,16 @@ class Settings extends React.Component {
     });
   };
 
+  handleShouldAutoTranslateToggle = (event, value) => {
+    this.setState({
+      shouldAutoTranslate: value,
+    });
+  };
+
   handleSubmit = () => {
     this.props.onSave({
       repeatThreshold: this.state.repeatThreshold,
+      shouldAutoTranslate: this.state.shouldAutoTranslate,
     });
     this.handleClose();
   };
@@ -111,6 +125,14 @@ class Settings extends React.Component {
             />
             <div style={styles.itemText}>{this.state.repeatThreshold}</div>
           </div>
+          <div style={styles.item}>
+            <div style={styles.itemText}>Auto Translate</div>
+            <Toggle
+              style={styles.toggle}
+              toggled={this.state.shouldAutoTranslate}
+              onToggle={this.handleShouldAutoTranslateToggle}
+            />
+          </div>
         </Dialog>
       </div>
     );
@@ -119,6 +141,7 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
   repeatThreshold: PropTypes.number.isRequired,
+  shouldAutoTranslate: PropTypes.bool.isRequired,
   onSave: PropTypes.func,
 };
 

@@ -62,9 +62,7 @@ class Index extends React.Component {
   };
 
   handleSettingsSave = (settings) => {
-    this.setState({
-      repeatThreshold: settings.repeatThreshold,
-    });
+    this.setState({ ...settings });
   };
 
   handleCancelEditingWord = () => {
@@ -109,6 +107,7 @@ class Index extends React.Component {
           </Head>
           <Settings
             repeatThreshold={this.state.repeatThreshold}
+            shouldAutoTranslate={this.state.shouldAutoTranslate}
             onSave={this.handleSettingsSave}
           />
           <RepeatPanel
