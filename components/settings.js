@@ -135,7 +135,7 @@ class Settings extends React.Component {
             <div style={styles.itemText}>{this.state.repeatThreshold}</div>
           </div>
           <div style={styles.item}>
-            <div style={styles.itemText}>Auto Translate</div>
+            <div style={styles.itemText}>Auto Translation</div>
             <Toggle
               style={styles.toggle}
               toggled={this.state.shouldAutoTranslate}
