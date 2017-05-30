@@ -9,14 +9,15 @@
   },
   "scripts": {
     "test": "npm run lint",
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "NODE_ENV=production node server.js",
     "lint": "eslint ."
   },
   "author": "dq",
   "license": "ISC",
   "dependencies": {
+    "express": "4.15.3",
     "lodash": "4.17.4",
     "material-ui": "0.18.1",
     "next": "2.4.0",
