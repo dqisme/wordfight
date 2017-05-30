@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/translate', require('./translate'));
+router.use('/translation', require('./translation'));
 
 module.exports = router;
