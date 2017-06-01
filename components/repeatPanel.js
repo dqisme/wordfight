@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from 'material-ui';
+import { IconButton, TextField } from 'material-ui';
+import { grey500 } from 'material-ui/styles/colors';
+import CancelIcon from 'material-ui/svg-icons/content/clear';
 import * as _ from 'lodash';
 
 import Word from '../models/word';
@@ -13,36 +15,42 @@ const styles = {
     justifyContent: 'flex-end',
     height: 200,
   },
+  inputWrapper: {
+    position: 'relative',
+  },
+  cancelButton: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+  },
 };
+
+const initialState = {
+  word: new Word('', ''),
+  repeatCount: 0,
+  currentFieldIndex: 0,
+  inputValue: '',
+  inputError: '',
+  inputLabel: '',
+  isInputDisabled: false,
+};
+const wordFields = _.keys(initialState.word);
 
 class RepeatPanel extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      word: this.initialWord,
-      repeatCount: 0,
-      currentFieldIndex: 0,
-      inputValue: '',
-      inputError: '',
-      inputLabel: '',
-      isInputDisabled: false,
-    };
+    this.state = initialState;
   }
-
-  initialWord = new Word('', '');
-
-  wordFields = _.keys(this.initialWord);
-
   get previousFieldIndex() {
-    return (this.state.currentFieldIndex + -1 + this.wordFields.length) % this.wordFields.length;
+    return (this.state.currentFieldIndex + -1 + wordFields.length) % wordFields.length;
   }
 
   get nextFieldIndex() {
-    return (this.state.currentFieldIndex + 1) % this.wordFields.length;
+    return (this.state.currentFieldIndex + 1) % wordFields.length;
   }
 
   get currentField() {
-    return this.wordFields[this.state.currentFieldIndex];
+    return wordFields[this.state.currentFieldIndex];
   }
 
   get inputUnderlineStyle() {
@@ -53,6 +61,15 @@ class RepeatPanel extends React.Component {
     };
   }
 
+  get shouldShouldCancelButton() {
+    return wordFields.some(field => !_.isEmpty(this.state.word[field])) &&
+      !this.state.isInputDisabled;
+  }
+
+  handleInputCancel = () => {
+    this.setState({ ...initialState });
+  };
+
   handleInputChange = (event) => {
     this.setState({ inputValue: event.target.value });
   };
@@ -62,7 +79,7 @@ class RepeatPanel extends React.Component {
       event.preventDefault();
       const isFirstTime = _.isEmpty(this.state.word[this.currentField]);
       const isCorrect = this.state.inputValue === this.state.word[this.currentField];
-      const isLastField = this.state.currentFieldIndex === this.wordFields.length - 1;
+      const isLastField = this.state.currentFieldIndex === wordFields.length - 1;
       const isFirstTimeInputSuccess = isFirstTime && !isCorrect;
       const isInputSuccess = (isFirstTimeInputSuccess) || (!isFirstTime && isCorrect);
 
@@ -96,7 +113,7 @@ class RepeatPanel extends React.Component {
           if (updatedRepeatCount >= this.props.repeatThreshold) {
             this.props.onSave(updatedWord);
             updatedRepeatCount = 0;
-            updatedWord = this.initialWord;
+            updatedWord = initialState.word;
           }
         }
       }
@@ -118,20 +135,28 @@ class RepeatPanel extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <h1>{this.state.word[this.wordFields[this.previousFieldIndex]]}</h1>
-        <TextField
-          ref={(component) => {
-            this.input = component;
-          }}
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-          hintText={_.startCase(this.currentField)}
-          onKeyDown={this.handleInputKeyDown}
-          errorText={this.state.inputError}
-          underlineFocusStyle={this.inputUnderlineStyle}
-          disabled={this.state.isInputDisabled}
-          floatingLabelText={this.state.inputLabel}
-        />
+        <h1>{this.state.word[wordFields[this.previousFieldIndex]]}</h1>
+        <div style={styles.inputWrapper}>
+          {
+            this.shouldShouldCancelButton &&
+            <IconButton onTouchTap={this.handleInputCancel} style={styles.cancelButton}>
+              <CancelIcon color={grey500} />
+            </IconButton>
+          }
+          <TextField
+            ref={(component) => {
+              this.input = component;
+            }}
+            value={this.state.inputValue}
+            onChange={this.handleInputChange}
+            hintText={_.startCase(this.currentField)}
+            onKeyDown={this.handleInputKeyDown}
+            errorText={this.state.inputError}
+            underlineFocusStyle={this.inputUnderlineStyle}
+            disabled={this.state.isInputDisabled}
+            floatingLabelText={this.state.inputLabel}
+          />
+        </div>
       </div>
     );
   }
