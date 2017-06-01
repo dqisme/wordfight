@@ -81,6 +81,7 @@ class RepeatPanel extends React.Component {
 
   handleInputCancel = () => {
     this.setState({ ...initialState });
+    this.input.focus();
   };
 
   handleInputChange = (event) => {
