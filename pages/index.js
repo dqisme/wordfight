@@ -54,12 +54,29 @@ class Index extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchWords();
+  }
+
   initialEditingWordIndex = -1;
+
+  fetchWords = () => {
+    const storedWordsData = window.localStorage.getItem('words');
+    if (storedWordsData) {
+      this.setState({
+        words: JSON.parse(storedWordsData),
+      });
+    }
+  };
+
+  storeWords = () => {
+    window.localStorage.setItem('words', JSON.stringify(this.state.words));
+  };
 
   handleRepeatSave = (savedWord) => {
     this.setState({
       words: this.state.words.concat(savedWord),
-    });
+    }, this.storeWords);
   };
 
   handleSettingsSave = (settings) => {
@@ -74,7 +91,7 @@ class Index extends React.Component {
     this.setState({
       editingWordIndex: this.initialEditingWordIndex,
       words: this.state.words.filter((word, index) => index !== this.state.editingWordIndex),
-    });
+    }, this.storeWords);
   };
 
   handleUpdateEditingWord = (updatedWord) => {
@@ -83,7 +100,7 @@ class Index extends React.Component {
         editingWordIndex: this.initialEditingWordIndex,
         words: this.state.words.map((word, index) =>
           (index === this.state.editingWordIndex ? updatedWord : word)),
-      });
+      }, this.storeWords);
     } else {
       this.handleDeleteEditingWord();
     }
