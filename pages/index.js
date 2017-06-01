@@ -10,6 +10,7 @@ import Settings from '../components/settings';
 import RepeatPanel from '../components/repeatPanel';
 import WordPanel from '../components/wordPanel';
 import EditingDialog from '../components/editingDialog';
+import Word from '../models/word';
 
 // Make sure react-tap-event-plugin only gets injected once
 // Needed for material-ui
@@ -64,7 +65,7 @@ class Index extends React.Component {
     const storedWordsData = window.localStorage.getItem('words');
     if (storedWordsData) {
       this.setState({
-        words: JSON.parse(storedWordsData),
+        words: JSON.parse(storedWordsData).map(wordObject => Object.assign(new Word(), wordObject)),
       });
     }
   };

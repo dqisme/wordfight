@@ -47,7 +47,7 @@ class WordPanel extends React.Component {
 }
 
 WordPanel.propTypes = {
-  words: PropTypes.arrayOf(PropTypes.shape(Word)).isRequired,
+  words: PropTypes.arrayOf(PropTypes.instanceOf(Word)).isRequired,
   onWordPress: PropTypes.func,
 };
 

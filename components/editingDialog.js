@@ -80,7 +80,7 @@ EditingDialog.propTypes = {
   onClose: PropTypes.func,
   onDelete: PropTypes.func,
   onUpdate: PropTypes.func,
-  word: PropTypes.shape(Word),
+  word: PropTypes.instanceOf(Word),
 };
 
 EditingDialog.defaultProps = {
