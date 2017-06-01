@@ -21,6 +21,11 @@ const styles = {
   cancelButton: {
     position: 'absolute',
     right: 0,
+  },
+  atop: {
+    top: 0,
+  },
+  beneath: {
     bottom: 0,
   },
 };
@@ -41,6 +46,7 @@ class RepeatPanel extends React.Component {
     super(props, context);
     this.state = initialState;
   }
+
   get previousFieldIndex() {
     return (this.state.currentFieldIndex + -1 + wordFields.length) % wordFields.length;
   }
@@ -59,6 +65,13 @@ class RepeatPanel extends React.Component {
         0 : `${Math.min(((this.state.repeatCount + 1) * 100) / this.props.repeatThreshold, 100)}%`,
       transformOrigin: 'center left',
     };
+  }
+
+  get cancelButtonStyle() {
+    return Object.assign({},
+      styles.cancelButton,
+      this.state.inputError ? styles.atop : styles.beneath,
+    );
   }
 
   get shouldShouldCancelButton() {
@@ -140,7 +153,7 @@ class RepeatPanel extends React.Component {
         <div style={styles.inputWrapper}>
           {
             this.shouldShouldCancelButton &&
-            <IconButton onTouchTap={this.handleInputCancel} style={styles.cancelButton}>
+            <IconButton onTouchTap={this.handleInputCancel} style={this.cancelButtonStyle}>
               <CancelIcon color={grey500} />
             </IconButton>
           }
