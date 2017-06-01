@@ -12,13 +12,15 @@ export default class Word {
     return this;
   }
 
-  translate(afterTranslateDo) {
+  translate(afterTranslate) {
+    function DoAfterTranslate(response) {
+      if (_.isFunction(afterTranslate)) {
+        afterTranslate(response);
+      }
+    }
     axios.get(`/api/translation/${this.spelling}`)
-      .then(({ data: { translation } }) => {
-        if (translation && _.isFunction(afterTranslateDo)) {
-          afterTranslateDo(translation);
-        }
-      });
+      .then(({ data }) => DoAfterTranslate(data))
+      .catch(({ response: { data } }) => DoAfterTranslate(data));
   }
 
   get canTranslate() {

@@ -92,12 +92,13 @@ class RepeatPanel extends React.Component {
         if (this.props.shouldAutoTranslate && updatedWord.canTranslate) {
           isInputDisabled = true;
           inputLabel = 'Wait for translating...';
-          updatedWord.translate((translation) => {
+          updatedWord.translate((response) => {
             this.input.blur();
             this.setState({
               isInputDisabled: false,
-              inputValue: translation,
+              inputValue: response.translation || '',
               inputLabel: '',
+              inputError: response.error || '',
             }, () => {
               this.input.focus();
             });

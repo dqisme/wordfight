@@ -12,15 +12,15 @@ router.get('/:word', function (req, res) {
   const word = req.params.word;
   if (word) {
     googleTranslateInstance.translate(word, 'zh', (error, translation) => {
-      if (!error) {
+      if (!error && translation) {
         res.send({ translation });
       } else {
-        res.send({ error: 'translation service error' });
+        res.status(500).send({ error: 'translation service error' });
         console.error(error);
       }
     });
   } else {
-    res.send({ error: 'invalid word' });
+    res.status(400).send({ error: 'invalid word' });
   }
 });
 
